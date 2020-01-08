@@ -18,4 +18,5 @@ steps:
       OS_IDENTITY_API_VERSION: 3
     commands:
       - apk add jq
-      - openstack server list -fjson | tee /dev/stdout | jq -r '.[] | .ID' | xargs --no-run-if-empty openstack server delete
+      - openstack --os-region=UK1 server list -fjson | tee /dev/stdout | jq -r '.[] | .ID' | xargs --no-run-if-empty openstack server delete
+      - openstack --os-region=GRA5 server list -fjson | tee /dev/stdout | jq -r '.[] | .ID' | xargs --no-run-if-empty openstack server delete
