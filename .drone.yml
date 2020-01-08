@@ -1,0 +1,21 @@
+kind: pipeline
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: cron
+    image: jmcvea/openstack-client
+    environment:
+      OS_AUTH_URL: https://auth.cloud.ovh.net/v3
+      OS_PROJECT_DOMAIN_NAME: Default
+      OS_PROJECT_NAME: "5495309338714580"
+      OS_PROJECT_ID: 0ecce5a02e8a4287b65b2c4e0f351414
+      OS_USERNAME: { from_secret: OS_USERNAME }
+      OS_PASSWORD: { from_secret: OS_PASSWORD }
+      OS_IDENTITY_API_VERSION: 3
+    commands:
+      - apk add jq
+      - openstack server list -fjson | jq -r '.[] | .ID' | xargs openstack server delete
